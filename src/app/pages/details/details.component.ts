@@ -20,7 +20,7 @@ export class DetailsComponent implements OnInit {
     private pokeApiService: PokeApiService
   ) {}
   ngOnInit(): void {
-    this.getPokemon;
+    this.getPokemon();
   }
   public getPokemon(){
     const id = this.activeRoute.snapshot.params['id'];
