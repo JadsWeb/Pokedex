@@ -1,21 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { IPokemonList } from '../shared/IPokemonList';
+import { IPokemonList} from '../shared/IPokemonList';
+import { ParamsPage } from '../entities/paramsPage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokeApiService {
   private url:string = "https://pokeapi.co/api/v2/pokemon/";
+  private dataSource = new BehaviorSubject<ParamsPage>(new ParamsPage());
   
   constructor(private http: HttpClient) 
   { }
+  setParams(params: ParamsPage){
+    this.dataSource.next(params);
+  }
+  getParams(): Observable<ParamsPage>{
+    return this.dataSource.asObservable();
+  }
 
-  public apiListAllPokemons(off: string, limit: string): Observable<any>{
+  public apiListAllPokemons(offSet: string, limit: string): Observable<any>{
     
-    return this.http.get<IPokemonList>(this.url, {params: {offset: off, limit}}).pipe(
+    return this.http.get<IPokemonList>(this.url, {params: {offset: offSet, limit}}).pipe(
       tap(res => res),
       tap(res=> {
         res.results.map((resPokemons: any) => {

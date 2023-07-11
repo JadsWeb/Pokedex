@@ -4,7 +4,3 @@ export interface IPokemonList {
     previous: string;
     results: Array<object>;
 }
-export interface IParamsLimit {
-    off: string;
-    limit: string;
-}

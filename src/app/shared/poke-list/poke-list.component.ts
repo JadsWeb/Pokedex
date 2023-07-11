@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { PokeApiService } from 'src/app/service/poke-api.service';
 import { ActivatedRoute } from '@angular/router';
-import { IParamsLimit } from '../IPokemonList';
+import { ParamsPage } from 'src/app/entities/paramsPage';
 
 @Component({
   selector: 'poke-list',
   templateUrl: './poke-list.component.html',
   styleUrls: ['./poke-list.component.scss']
 })
-export class PokeListComponent implements OnInit, IParamsLimit {
+export class PokeListComponent implements OnInit {
   private setAllPokemons: any;
-  
-  limit = this.activeRoute.snapshot.queryParams['limit'];
-  off = this.activeRoute.snapshot.queryParams['offset'];
+  private paramsPage: ParamsPage = ({
+    limit: this.activeRoute.snapshot.queryParams['limit'],
+    off: this.activeRoute.snapshot.queryParams['offset']
+  });
 
   public getAllPokemons: any;
   public apiError: boolean = false;
@@ -23,10 +24,11 @@ export class PokeListComponent implements OnInit, IParamsLimit {
   ){ }
 
   ngOnInit(): void {
-    this.pokeApiService.apiListAllPokemons(this.off, this.limit).subscribe({
+    this.pokeApiService.apiListAllPokemons(this.paramsPage.off, this.paramsPage.limit).subscribe({
       next: res => {
         this.setAllPokemons = res.results;
         this.getAllPokemons = this.setAllPokemons;
+        this.pokeApiService.setParams(this.paramsPage);
       },
       error: error => {
         this.apiError = true;

@@ -8,6 +8,9 @@ const routes: Routes = [
     path: '', component: HomeComponent
   },
   {
+    path: '?offset=&limit=', component: HomeComponent
+  },
+  {
     path: 'details/:id', component: DetailsComponent
   }
 ];
