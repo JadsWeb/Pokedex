@@ -13,7 +13,6 @@ export class DetailsComponent implements OnInit {
   private urlPokemon: string = 'https://pokeapi.co/api/v2/pokemon';
   private urlName: string = 'https://pokeapi.co/api/v2/pokemon-species';
   private _params = new ParamsPage();
-  private router = new Router;
 
   public pokemon: any;
   public isLoading: boolean = false;
@@ -23,6 +22,7 @@ export class DetailsComponent implements OnInit {
   constructor(
     private activeRoute: ActivatedRoute,
     private pokeApiService: PokeApiService,
+    private router: Router
   ) {  
     pokeApiService.getParams().subscribe(params => {
       this._params.limit = params.limit,
@@ -48,9 +48,10 @@ export class DetailsComponent implements OnInit {
     });
   }
   public backPage(){
-    if(this._params.limit != undefined)
+    if(this._params.limit !== undefined && this._params.limit !== '')
       this.router.navigate([`?offset=${this._params.off}&limit=${this._params.limit}`]);
-    if(this._params.limit === undefined)  
+      console.log(this._params)
+    if(this._params.limit === undefined || this._params.limit === '')  
       this.router.navigate(['']);
   }
 }
