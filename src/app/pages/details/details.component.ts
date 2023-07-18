@@ -48,10 +48,6 @@ export class DetailsComponent implements OnInit {
     });
   }
   public backPage(){
-    if(this._params.limit !== undefined && this._params.limit !== '')
-      this.router.navigate([`?offset=${this._params.off}&limit=${this._params.limit}`]);
-      console.log(this._params)
-    if(this._params.limit === undefined || this._params.limit === '')  
-      this.router.navigate(['']);
+    window.history.back();
   }
 }
