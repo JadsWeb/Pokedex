@@ -29,24 +29,8 @@ export class DetailsComponent implements OnInit {
       this._params.off = params.off
     });
   }
-  ngOnInit(): void {
-    this.getPokemon();
-  }
   
-  public getPokemon(){
-    const id = this.activeRoute.snapshot.params['id'];
-    const pokemon = this.pokeApiService.apiGetPokemons(`${this.urlPokemon}/${id}`);
-    const name = this.pokeApiService.apiGetPokemons(`${this.urlName}/${id}`);
-    return forkJoin([pokemon, name]).subscribe({
-      next: res => {
-        this.pokemon = res;
-        this.isLoading = true;
-      },
-      error: error => {
-        this.apiError = true;
-      }
-    });
-  }
+  
   public backPage(){
     window.history.back();
   }
