@@ -35,10 +35,4 @@ export class PokeListComponent implements OnInit {
       }
     });
   }
-  public getSearch(value: string){
-    const filter = this.setAllPokemons.filter((res: any) => {
-      return !res.name.indexOf(value.toLocaleLowerCase());
-    });
-    this.getAllPokemons = filter;
-  }
 }
